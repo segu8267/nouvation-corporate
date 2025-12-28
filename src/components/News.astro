@@ -1,0 +1,73 @@
+---
+// News Component
+import { getNewsList } from '../lib/microcms';
+
+// MicroCMSからニュースを取得（エラー時はフォールバックデータを使用）
+const newsItems = await getNewsList(10);
+---
+
+<section id="news" class="py-12 bg-[#F4F4F5] border-y border-gray-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12">
+      <!-- Title -->
+      <div class="flex items-center flex-shrink-0">
+        <h2 class="font-display text-2xl font-bold text-[#1B5E20] tracking-wider mr-4">NEWS</h2>
+        <span class="text-xs text-gray-500">お知らせ</span>
+      </div>
+
+      <!-- News List -->
+      <div class="flex-grow w-full">
+        <ul class="space-y-4">
+          {newsItems.map((item) => (
+            <li class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 border-b md:border-none border-gray-200 pb-3 md:pb-0">
+              <time class="text-sm text-gray-600 font-display flex-shrink-0">{item.date}</time>
+              <span class="text-xs font-bold text-white bg-[#1F2937] px-3 py-1 rounded w-fit">
+                {item.category}
+              </span>
+              <a 
+                href={item.link || "#"} 
+                class="text-sm font-bold text-[#1F2937] hover:text-[#1B5E20] transition-colors line-clamp-1 focus:outline-none focus:ring-2 focus:ring-[#1B5E20] focus:ring-offset-2 rounded px-1"
+                aria-label={`${item.title}の詳細を見る`}
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- View All Link (PC) -->
+      <div class="hidden md:flex items-center flex-shrink-0">
+        <a 
+          href="#" 
+          class="text-xs font-bold text-gray-600 hover:text-[#1B5E20] flex items-center group whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B5E20] focus:ring-offset-2 rounded px-2 py-1"
+          aria-label="すべてのニュースを見る"
+        >
+          VIEW ALL 
+          <svg 
+            class="ml-2 transition-transform group-hover:translate-x-1" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- View All Link (Mobile) -->
+      <div class="md:hidden w-full text-right">
+        <a 
+          href="#" 
+          class="text-xs font-bold text-gray-600 hover:text-[#1B5E20] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B5E20] focus:ring-offset-2 rounded px-2 py-1"
+          aria-label="すべてのニュースを見る"
+        >
+          VIEW ALL →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

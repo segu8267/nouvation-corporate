@@ -1,0 +1,41 @@
+---
+// First View Component
+---
+
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Layers -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#111111]"></div>
+  <div class="absolute inset-0 grid-pattern"></div>
+  <div 
+    class="absolute inset-0 bg-cover bg-center opacity-30" 
+    style="background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80');"
+    role="img"
+    aria-label="農業の風景"
+  ></div>
+  
+  <!-- Content -->
+  <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold mb-8 text-white leading-tight tracking-tight">
+      農業界に、<br />
+      <span class="text-[#D4FF00]">情報</span>で革新を。
+    </h1>
+    <p class="text-lg md:text-2xl font-medium text-[#E5E7EB] leading-relaxed">
+      農家が報われる社会を、情報とつながりで実現する<br class="hidden md:block" />
+      次世代の農業インフラメディア
+    </p>
+    
+    <!-- Scroll Indicator -->
+    <div class="mt-12">
+      <svg 
+        class="mx-auto animate-bounce text-[#D4FF00]" 
+        width="32" 
+        height="32" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </div>
+</section>

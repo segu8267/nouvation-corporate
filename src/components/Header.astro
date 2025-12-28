@@ -1,0 +1,135 @@
+---
+// Header Component
+---
+
+<header id="smart-header" class="fixed w-full top-0 z-50 transition-all duration-300 ease-in-out">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo -->
+      <a href="/" class="font-display font-bold text-2xl tracking-tight text-[#D4FF00] hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded" aria-label="NOUVATION トップページへ">
+        NOUVATION
+      </a>
+
+      <!-- PC Navigation -->
+      <nav class="hidden md:flex space-x-8 text-sm font-bold" aria-label="メインナビゲーション">
+        <a href="#news" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">News</a>
+        <a href="#mission" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Mission</a>
+        <a href="#services" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Services</a>
+        <a href="#story" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Story</a>
+        <a href="#voice" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Voice</a>
+      </nav>
+
+      <!-- PC CTA Button -->
+      <div class="hidden md:block">
+        <a 
+          href="#" 
+          class="px-6 py-3 bg-[#1B5E20] text-white text-sm font-bold rounded-full hover:bg-[#2e7d32] transition-all hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] min-h-[44px] flex items-center justify-center"
+          aria-label="LINE公式アカウントに登録する"
+        >
+          LINE登録
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        id="menu-toggle"
+        type="button"
+        class="md:hidden p-2 text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
+        aria-label="メニューを開く"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <nav id="mobile-menu" class="md:hidden bg-[#111111]/98 backdrop-blur-md border-t border-[#D4FF00]/20 hidden" aria-label="モバイルメニュー">
+    <div class="px-4 py-6 space-y-4">
+      <a href="#news" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">News</a>
+      <a href="#mission" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Mission</a>
+      <a href="#services" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Services</a>
+      <a href="#story" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Story</a>
+      <a href="#voice" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Voice</a>
+      <div class="pt-4 border-t border-[#D4FF00]/20">
+        <a 
+          href="#" 
+          class="block w-full text-center px-6 py-3 bg-[#1B5E20] text-white text-sm font-bold rounded-full hover:bg-[#2e7d32] transition-colors"
+        >
+          LINE登録
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Smart Header: Show/Hide on Scroll
+  let lastScrollY = 0;
+  let isScrolled = false;
+  const header = document.getElementById('smart-header');
+
+  function updateHeader() {
+    const currentScrollY = window.scrollY;
+    
+    // Add background when scrolled
+    if (currentScrollY > 50 && !isScrolled) {
+      header?.classList.add('bg-[#111111]/95', 'backdrop-blur-md', 'border-b', 'border-[#D4FF00]/20');
+      isScrolled = true;
+    } else if (currentScrollY <= 50 && isScrolled) {
+      header?.classList.remove('bg-[#111111]/95', 'backdrop-blur-md', 'border-b', 'border-[#D4FF00]/20');
+      isScrolled = false;
+    }
+
+    // Hide on scroll down, show on scroll up
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      header?.style.setProperty('transform', 'translateY(-100%)');
+    } else {
+      header?.style.setProperty('transform', 'translateY(0)');
+    }
+    
+    lastScrollY = currentScrollY;
+  }
+
+  window.addEventListener('scroll', updateHeader, { passive: true });
+
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    
+    if (isOpen) {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+      menuToggle?.setAttribute('aria-label', 'メニューを開く');
+    } else {
+      mobileMenu?.classList.remove('hidden');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      menuToggle?.setAttribute('aria-expanded', 'true');
+      menuToggle?.setAttribute('aria-label', 'メニューを閉じる');
+    }
+  });
+
+  // Close menu when clicking nav links
+  const mobileLinks = document.querySelectorAll('#mobile-menu a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    });
+  });
+</script>
