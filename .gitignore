@@ -29,3 +29,8 @@ pnpm-debug.log*
 # Astro
 .astro/
 
+# Video files (using Cloudinary)
+public/videos/*.mp4
+public/videos/*.webm
+public/videos/*.mov
+

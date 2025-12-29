@@ -3,15 +3,21 @@
 ---
 
 <section class="relative h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Video -->
+  <video 
+    autoplay 
+    muted 
+    loop 
+    playsinline
+    class="absolute inset-0 w-full h-full object-cover"
+    aria-label="農業の風景"
+  >
+    <source src="https://res.cloudinary.com/djlmck6yb/video/upload/v1766990947/fv_lrggyc.webm" type="video/webm" />
+  </video>
+  
   <!-- Background Layers -->
   <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#111111]"></div>
   <div class="absolute inset-0 grid-pattern"></div>
-  <div 
-    class="absolute inset-0 bg-cover bg-center opacity-30" 
-    style="background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&q=80');"
-    role="img"
-    aria-label="農業の風景"
-  ></div>
   
   <!-- Content -->
   <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
