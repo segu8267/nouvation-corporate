@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Noto Sans JP"', 'sans-serif'],
-        display: ['"Syne"', 'sans-serif'],
+        display: ['YakuHanJP', 'Zen Maru Gothic', 'serif'],
       },
       colors: {
         'deep-soil': '#111111',
