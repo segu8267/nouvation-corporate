@@ -50,20 +50,37 @@
   </div>
 
   <!-- Mobile Menu -->
-  <nav id="mobile-menu" class="md:hidden bg-[#111111]/98 backdrop-blur-md border-t border-[#D4FF00]/20 hidden" aria-label="モバイルメニュー">
-    <div class="px-4 py-6 space-y-4">
-      <a href="#news" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">News</a>
-      <a href="#mission" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Mission</a>
-      <a href="#services" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Services</a>
-      <a href="#story" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Story</a>
-      <a href="#voice" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Voice</a>
-      <div class="pt-4 border-t border-[#d5db00]/20">
-        <a 
-          href="#" 
-          class="block w-full text-center px-6 py-3 bg-[#d5db00] text-[#352421] text-sm font-bold rounded-full hover:bg-[#d5db00]/90 transition-colors"
-        >
-          LINE登録
+  <nav id="mobile-menu" class="md:hidden fixed inset-0 bg-[#464237] rough-texture z-[60] hidden" aria-label="モバイルメニュー">
+    <div class="h-full flex flex-col">
+      <div class="flex justify-between items-center h-20 px-4 sm:px-6 border-b border-white/10">
+        <a href="/" class="hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 focus:ring-offset-[#464237] rounded" aria-label="NOUVATION トップページへ">
+          <img src="/images/logo.png" alt="NOUVATION" class="h-8 w-auto" />
         </a>
+        <button 
+          id="mobile-close-btn"
+          type="button"
+          class="p-2 text-white hover:text-white/80 transition-colors focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 focus:ring-offset-[#464237] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
+          aria-label="メニューを閉じる"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto px-4 py-8 space-y-6">
+        <a href="#news" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">News</a>
+        <a href="#mission" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Mission</a>
+        <a href="#services" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Services</a>
+        <a href="#story" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Story</a>
+        <a href="#voice" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Voice</a>
+        <div class="pt-6 border-t border-white/20 mt-6">
+          <a 
+            href="#" 
+            class="block w-full text-center px-6 py-4 bg-[#d5db00] text-[#352421] text-base font-bold rounded-full hover:bg-[#d5db00]/90 transition-colors"
+          >
+            LINE登録
+          </a>
+        </div>
       </div>
     </div>
   </nav>
@@ -191,32 +208,46 @@
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
   const closeIcon = document.getElementById('close-icon');
+  const mobileCloseBtn = document.getElementById('mobile-close-btn');
+
+  function openMobileMenu() {
+    mobileMenu?.classList.remove('hidden');
+    menuIcon?.classList.add('hidden');
+    closeIcon?.classList.remove('hidden');
+    menuToggle?.setAttribute('aria-expanded', 'true');
+    menuToggle?.setAttribute('aria-label', 'メニューを閉じる');
+    document.body.style.overflow = 'hidden'; // スクロールを無効化
+  }
+
+  function closeMobileMenu() {
+    mobileMenu?.classList.add('hidden');
+    menuIcon?.classList.remove('hidden');
+    closeIcon?.classList.add('hidden');
+    menuToggle?.setAttribute('aria-expanded', 'false');
+    menuToggle?.setAttribute('aria-label', 'メニューを開く');
+    document.body.style.overflow = ''; // スクロールを有効化
+  }
 
   menuToggle?.addEventListener('click', () => {
     const isOpen = !mobileMenu?.classList.contains('hidden');
     
     if (isOpen) {
-      mobileMenu?.classList.add('hidden');
-      menuIcon?.classList.remove('hidden');
-      closeIcon?.classList.add('hidden');
-      menuToggle?.setAttribute('aria-expanded', 'false');
-      menuToggle?.setAttribute('aria-label', 'メニューを開く');
+      closeMobileMenu();
     } else {
-      mobileMenu?.classList.remove('hidden');
-      menuIcon?.classList.add('hidden');
-      closeIcon?.classList.remove('hidden');
-      menuToggle?.setAttribute('aria-expanded', 'true');
-      menuToggle?.setAttribute('aria-label', 'メニューを閉じる');
+      openMobileMenu();
     }
   });
 
+  // モバイルメニュー内の閉じるボタン
+  mobileCloseBtn?.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+
   // Close menu when clicking nav links
-  const mobileLinks = document.querySelectorAll('#mobile-menu a');
+  const mobileLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
   mobileLinks.forEach(link => {
     link.addEventListener('click', () => {
-      mobileMenu?.classList.add('hidden');
-      menuIcon?.classList.remove('hidden');
-      closeIcon?.classList.add('hidden');
+      closeMobileMenu();
     });
   });
 </script>
