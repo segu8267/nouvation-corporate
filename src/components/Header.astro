@@ -2,7 +2,7 @@
 // Header Component
 ---
 
-<header id="smart-header" class="fixed w-full top-0 z-50 transition-all duration-300 ease-in-out">
+<header id="smart-header" class="fixed w-full top-0 z-50 transition-opacity duration-300 ease-in-out">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center h-20">
       <!-- Logo -->
@@ -77,11 +77,13 @@
   function updateHeader() {
     const currentScrollY = window.scrollY;
 
-    // Hide on scroll down, show on scroll up
+    // Hide on scroll down, show on scroll up using opacity
     if (currentScrollY > lastScrollY && currentScrollY > 100) {
-      header?.style.setProperty('transform', 'translateY(-100%)');
+      header?.style.setProperty('opacity', '0');
+      header?.style.setProperty('pointer-events', 'none');
     } else {
-      header?.style.setProperty('transform', 'translateY(0)');
+      header?.style.setProperty('opacity', '1');
+      header?.style.setProperty('pointer-events', 'auto');
     }
     
     lastScrollY = currentScrollY;
