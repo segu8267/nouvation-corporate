@@ -72,20 +72,10 @@
 <script>
   // Smart Header: Show/Hide on Scroll
   let lastScrollY = 0;
-  let isScrolled = false;
   const header = document.getElementById('smart-header');
 
   function updateHeader() {
     const currentScrollY = window.scrollY;
-    
-    // Add background when scrolled
-    if (currentScrollY > 50 && !isScrolled) {
-      header?.classList.add('bg-[#111111]/95', 'backdrop-blur-md', 'border-b', 'border-[#D4FF00]/20');
-      isScrolled = true;
-    } else if (currentScrollY <= 50 && isScrolled) {
-      header?.classList.remove('bg-[#111111]/95', 'backdrop-blur-md', 'border-b', 'border-[#D4FF00]/20');
-      isScrolled = false;
-    }
 
     // Hide on scroll down, show on scroll up
     if (currentScrollY > lastScrollY && currentScrollY > 100) {
