@@ -20,27 +20,27 @@ const voices = [
 ];
 ---
 
-<section id="voice" class="py-24 md:py-32 bg-[#111111]">
+<section id="voice" class="py-24 md:py-32 bg-[#F0ECDE]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <!-- Section Title -->
     <div class="text-center mb-20 fade-up">
-      <h2 class="font-display text-3xl md:text-5xl font-bold mb-4 leading-relaxed text-white">Voice</h2>
-      <p class="text-gray-500">利用者の声</p>
+      <h2 class="font-display text-3xl md:text-5xl font-bold mb-4 leading-relaxed text-[#231815]">Voice</h2>
+      <p class="text-[#231815]/70">利用者の声</p>
     </div>
 
     <!-- Voice Cards -->
     <div class="grid md:grid-cols-3 gap-8">
       {voices.map((voice) => (
-        <div class="bg-[#1F2937] border border-[#D4FF00]/20 rounded-2xl p-8 fade-up hover:border-[#D4FF00]/40 transition-all">
+        <div class="bg-white border border-[#231815]/10 rounded-2xl p-8 fade-up hover:border-[#d5db00]/40 transition-all shadow-sm">
           <div class="flex items-center mb-6">
-            <div class="w-12 h-12 bg-[#D4FF00]/20 rounded-full mr-4 flex items-center justify-center text-[#D4FF00] font-bold text-lg">
+            <div class="w-12 h-12 bg-[#d5db00]/20 rounded-full mr-4 flex items-center justify-center text-[#231815] font-bold text-lg">
               {voice.age.charAt(0)}
             </div>
-            <span class="font-bold text-sm text-white">{voice.age}</span>
+            <span class="font-bold text-sm text-[#231815]">{voice.age}</span>
           </div>
           
-          <h3 class="font-bold text-xl mb-4 text-white">{voice.title}</h3>
-          <p class="text-sm text-[#E5E7EB] leading-loose">{voice.text}</p>
+          <h3 class="font-bold text-xl mb-4 text-[#231815]">{voice.title}</h3>
+          <p class="text-sm text-[#231815] leading-loose">{voice.text}</p>
         </div>
       ))}
     </div>

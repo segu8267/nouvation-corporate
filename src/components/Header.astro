@@ -11,19 +11,19 @@
       </a>
 
       <!-- PC Navigation -->
-      <nav class="hidden md:flex space-x-8 text-sm font-bold" aria-label="メインナビゲーション">
-        <a href="#news" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">News</a>
-        <a href="#mission" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Mission</a>
-        <a href="#services" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Services</a>
-        <a href="#story" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Story</a>
-        <a href="#voice" class="text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Voice</a>
+      <nav id="pc-nav" class="hidden md:flex space-x-8 text-sm font-bold transition-colors duration-300" aria-label="メインナビゲーション">
+        <a href="#news" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">News</a>
+        <a href="#mission" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Mission</a>
+        <a href="#services" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Services</a>
+        <a href="#story" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Story</a>
+        <a href="#voice" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Voice</a>
       </nav>
 
       <!-- PC CTA Button -->
       <div class="hidden md:block">
         <a 
           href="#" 
-          class="px-6 py-3 bg-[#1B5E20] text-white text-sm font-bold rounded-full hover:bg-[#2e7d32] transition-all hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] min-h-[44px] flex items-center justify-center"
+          class="px-6 py-3 bg-[#d5db00] text-[#352421] text-sm font-bold rounded-full hover:bg-[#d5db00]/90 transition-all hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 focus:ring-offset-transparent min-h-[44px] flex items-center justify-center"
           aria-label="LINE公式アカウントに登録する"
         >
           LINE登録
@@ -34,7 +34,7 @@
       <button 
         id="menu-toggle"
         type="button"
-        class="md:hidden p-2 text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
+        class="menu-toggle md:hidden p-2 text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="メニューを開く"
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -57,10 +57,10 @@
       <a href="#services" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Services</a>
       <a href="#story" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Story</a>
       <a href="#voice" class="block text-sm font-bold text-[#E5E7EB] hover:text-[#D4FF00] transition-colors">Voice</a>
-      <div class="pt-4 border-t border-[#D4FF00]/20">
+      <div class="pt-4 border-t border-[#d5db00]/20">
         <a 
           href="#" 
-          class="block w-full text-center px-6 py-3 bg-[#1B5E20] text-white text-sm font-bold rounded-full hover:bg-[#2e7d32] transition-colors"
+          class="block w-full text-center px-6 py-3 bg-[#d5db00] text-[#352421] text-sm font-bold rounded-full hover:bg-[#d5db00]/90 transition-colors"
         >
           LINE登録
         </a>
@@ -73,6 +73,83 @@
   // Smart Header: Show/Hide on Scroll
   let lastScrollY = 0;
   const header = document.getElementById('smart-header');
+  const pcNav = document.getElementById('pc-nav');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const menuToggle = document.getElementById('menu-toggle');
+
+  // 背景色を検出してテキスト色を変更する関数
+  function detectBackgroundColor() {
+    if (!header) return;
+
+    const headerRect = header.getBoundingClientRect();
+    const headerBottom = headerRect.bottom;
+    
+    // ヘッダーの下の位置にあるセクションを検出
+    const sections = document.querySelectorAll('section');
+    let currentSection = null;
+
+    // ヘッダーの下に位置するセクションを探す
+    for (const section of sections) {
+      const rect = section.getBoundingClientRect();
+      // ヘッダーの下端がセクション内にあるか、またはセクションの上端がヘッダーの下にある場合
+      if (rect.top <= headerBottom && rect.bottom >= headerRect.top) {
+        currentSection = section;
+        break;
+      }
+    }
+
+    // FVセクション（最初のセクション）の場合は黒背景と判定
+    if (!currentSection || currentSection.id === '') {
+      // FVセクション内（黒背景）なので白文字
+      setTextColor('light');
+      return;
+    }
+
+    // セクションの背景色クラスを確認
+    const bgClass = Array.from(currentSection.classList).find(cls => 
+      cls.startsWith('bg-')
+    );
+    
+    // 白っぽい背景かどうかを判定（#F6F6EE, #F0ECDE）
+    const isLightBg = bgClass && (
+      bgClass.includes('F6F6EE') || 
+      bgClass.includes('F0ECDE') ||
+      bgClass.includes('F4F4F5') || 
+      bgClass.includes('white') || 
+      bgClass.includes('gray-50') ||
+      bgClass.includes('gray-100') ||
+      bgClass.includes('gray-200')
+    );
+
+    if (isLightBg) {
+      // 白背景なので黒文字
+      setTextColor('dark');
+    } else {
+      // 黒背景なので白文字
+      setTextColor('light');
+    }
+  }
+
+  // テキスト色を設定する関数
+  function setTextColor(mode) {
+    if (mode === 'dark') {
+      // 黒文字（白背景用）
+      navLinks.forEach(link => {
+        link.style.color = '#1F2937';
+      });
+      if (menuToggle) {
+        menuToggle.style.color = '#1F2937';
+      }
+    } else {
+      // 白文字（黒背景用）
+      navLinks.forEach(link => {
+        link.style.color = '#E5E7EB';
+      });
+      if (menuToggle) {
+        menuToggle.style.color = '#E5E7EB';
+      }
+    }
+  }
 
   function updateHeader() {
     const currentScrollY = window.scrollY;
@@ -84,15 +161,33 @@
     } else {
       header?.style.setProperty('opacity', '1');
       header?.style.setProperty('pointer-events', 'auto');
+      // ヘッダーが表示されている時だけ背景色を検出
+      detectBackgroundColor();
     }
     
     lastScrollY = currentScrollY;
   }
 
+  // スクロール時にも背景色を検出（PCのみ）
+  if (window.innerWidth >= 768) {
+    window.addEventListener('scroll', detectBackgroundColor, { passive: true });
+  }
+
+  // 初期状態でも背景色を検出
+  window.addEventListener('load', () => {
+    detectBackgroundColor();
+  });
+
+  // リサイズ時にも背景色を再検出
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      detectBackgroundColor();
+    }
+  }, { passive: true });
+
   window.addEventListener('scroll', updateHeader, { passive: true });
 
   // Mobile Menu Toggle
-  const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
   const closeIcon = document.getElementById('close-icon');
