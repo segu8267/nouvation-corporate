@@ -51,22 +51,7 @@
 
   <!-- Mobile Menu -->
   <nav id="mobile-menu" class="md:hidden fixed inset-0 bg-[#464237] rough-texture z-[60] hidden" aria-label="モバイルメニュー">
-    <div class="h-full flex flex-col">
-      <div class="flex justify-between items-center h-20 px-4 sm:px-6 border-b border-white/10">
-        <a href="/" class="hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 focus:ring-offset-[#464237] rounded" aria-label="NOUVATION トップページへ">
-          <img src="/images/logo.png" alt="NOUVATION" class="h-8 w-auto" />
-        </a>
-        <button 
-          id="mobile-close-btn"
-          type="button"
-          class="p-2 text-white hover:text-white/80 transition-colors focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 focus:ring-offset-[#464237] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
-          aria-label="メニューを閉じる"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
+    <div class="h-full flex flex-col pt-20">
       <div class="flex-1 overflow-y-auto px-4 py-8 space-y-6">
         <a href="#news" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">News</a>
         <a href="#mission" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Mission</a>
@@ -208,7 +193,6 @@
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
   const closeIcon = document.getElementById('close-icon');
-  const mobileCloseBtn = document.getElementById('mobile-close-btn');
 
   function openMobileMenu() {
     mobileMenu?.classList.remove('hidden');
@@ -236,11 +220,6 @@
     } else {
       openMobileMenu();
     }
-  });
-
-  // モバイルメニュー内の閉じるボタン
-  mobileCloseBtn?.addEventListener('click', () => {
-    closeMobileMenu();
   });
 
   // Close menu when clicking nav links

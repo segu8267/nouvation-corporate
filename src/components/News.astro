@@ -20,7 +20,7 @@ const newsItems = await getNewsList(10);
         <ul class="space-y-4">
           {newsItems.map((item) => (
             <li class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 border-b md:border-none border-[#231815]/20 pb-3 md:pb-0">
-              <time class="text-sm text-[#231815]/80 font-display flex-shrink-0">{item.date}</time>
+              <time class="text-sm text-[#231815]/80 flex-shrink-0">{item.date}</time>
               <span class="text-xs font-bold text-white bg-[#231815] px-3 py-1 rounded w-fit">
                 {item.category}
               </span>
