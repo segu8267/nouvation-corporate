@@ -34,7 +34,7 @@
       <button 
         id="menu-toggle"
         type="button"
-        class="menu-toggle md:hidden p-2 text-[#E5E7EB] hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
+        class="menu-toggle md:hidden p-2 text-[#231815] hover:text-[#231815]/80 transition-colors focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 focus:ring-offset-[#F0ECDE] rounded min-w-[44px] min-h-[44px] flex items-center justify-center"
         aria-label="メニューを開く"
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -50,15 +50,15 @@
   </div>
 
   <!-- Mobile Menu -->
-  <nav id="mobile-menu" class="md:hidden fixed inset-0 bg-[#464237] rough-texture z-[60] hidden" aria-label="モバイルメニュー">
+  <nav id="mobile-menu" class="md:hidden fixed inset-0 bg-[#F0ECDE] z-[60] hidden" aria-label="モバイルメニュー">
     <div class="h-full flex flex-col pt-20">
       <div class="flex-1 overflow-y-auto px-4 py-8 space-y-6">
-        <a href="#news" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">News</a>
-        <a href="#mission" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Mission</a>
-        <a href="#services" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Services</a>
-        <a href="#story" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Story</a>
-        <a href="#voice" class="block text-lg font-bold text-white hover:text-white/80 transition-colors py-3">Voice</a>
-        <div class="pt-6 border-t border-white/20 mt-6">
+        <a href="#news" class="block text-lg font-bold text-[#231815] hover:text-[#231815]/80 transition-colors py-3">News</a>
+        <a href="#mission" class="block text-lg font-bold text-[#231815] hover:text-[#231815]/80 transition-colors py-3">Mission</a>
+        <a href="#services" class="block text-lg font-bold text-[#231815] hover:text-[#231815]/80 transition-colors py-3">Services</a>
+        <a href="#story" class="block text-lg font-bold text-[#231815] hover:text-[#231815]/80 transition-colors py-3">Story</a>
+        <a href="#voice" class="block text-lg font-bold text-[#231815] hover:text-[#231815]/80 transition-colors py-3">Voice</a>
+        <div class="pt-6 border-t border-[#231815]/20 mt-6">
           <a 
             href="#" 
             class="block w-full text-center px-6 py-4 bg-[#d5db00] text-[#352421] text-base font-bold rounded-full hover:bg-[#d5db00]/90 transition-colors"
@@ -201,6 +201,10 @@
     menuToggle?.setAttribute('aria-expanded', 'true');
     menuToggle?.setAttribute('aria-label', 'メニューを閉じる');
     document.body.style.overflow = 'hidden'; // スクロールを無効化
+    // ヘッダーの背景色を変更
+    if (header) {
+      header.style.backgroundColor = '#F0ECDE';
+    }
   }
 
   function closeMobileMenu() {
@@ -210,6 +214,10 @@
     menuToggle?.setAttribute('aria-expanded', 'false');
     menuToggle?.setAttribute('aria-label', 'メニューを開く');
     document.body.style.overflow = ''; // スクロールを有効化
+    // ヘッダーの背景色を元に戻す
+    if (header) {
+      header.style.backgroundColor = '';
+    }
   }
 
   menuToggle?.addEventListener('click', () => {
