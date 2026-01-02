@@ -26,7 +26,7 @@ const newsItems = await getNewsList(10);
               </span>
               <a 
                 href={item.link || "#"} 
-                class="text-sm font-bold text-[#231815] hover:text-[#231815]/70 transition-colors line-clamp-1 focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 rounded px-1"
+                class="text-sm font-bold text-[#231815] hover:text-[#231815]/70 transition-colors line-clamp-1 focus:outline-none rounded px-1"
                 aria-label={`${item.title}の詳細を見る`}
               >
                 {item.title}
@@ -40,7 +40,7 @@ const newsItems = await getNewsList(10);
       <div class="hidden md:flex items-center flex-shrink-0">
         <a 
           href="#" 
-          class="text-xs font-bold text-[#231815] hover:text-[#231815]/70 flex items-center group whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 rounded px-2 py-1"
+          class="text-xs font-bold text-[#231815] hover:text-[#231815]/70 flex items-center group whitespace-nowrap transition-colors focus:outline-none rounded px-2 py-1"
           aria-label="すべてのニュースを見る"
         >
           VIEW ALL 
@@ -62,7 +62,7 @@ const newsItems = await getNewsList(10);
       <div class="md:hidden w-full text-right">
         <a 
           href="#" 
-          class="text-xs font-bold text-[#231815] hover:text-[#231815]/70 transition-colors focus:outline-none focus:ring-2 focus:ring-[#d5db00] focus:ring-offset-2 rounded px-2 py-1"
+          class="text-xs font-bold text-[#231815] hover:text-[#231815]/70 transition-colors focus:outline-none rounded px-2 py-1"
           aria-label="すべてのニュースを見る"
         >
           VIEW ALL →
