@@ -133,16 +133,16 @@
   }
 
   // テキスト色を設定する関数
-  function setTextColor(mode) {
-    const logoImg = document.querySelector('#header-logo img');
+  function setTextColor(mode: 'dark' | 'light') {
+    const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
     
     if (mode === 'dark') {
       // 黒文字（白背景用）
-      navLinks.forEach(link => {
-        link.style.color = '#1F2937';
+      navLinks.forEach((link) => {
+        (link as HTMLElement).style.color = '#1F2937';
       });
       if (menuToggle) {
-        menuToggle.style.color = '#1F2937';
+        (menuToggle as HTMLElement).style.color = '#1F2937';
       }
       // ロゴを黒に変更
       if (logoImg) {
@@ -150,11 +150,11 @@
       }
     } else {
       // 白文字（黒背景用）
-      navLinks.forEach(link => {
-        link.style.color = '#E5E7EB';
+      navLinks.forEach((link) => {
+        (link as HTMLElement).style.color = '#E5E7EB';
       });
       if (menuToggle) {
-        menuToggle.style.color = '#E5E7EB';
+        (menuToggle as HTMLElement).style.color = '#E5E7EB';
       }
       // ロゴを白に変更
       if (logoImg) {
