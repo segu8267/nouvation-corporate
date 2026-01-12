@@ -105,66 +105,54 @@
     }
   }
   
-  /* テーマに応じた背景色（モバイル） */
-  body[data-theme="dark"] #smart-header.scrolled {
-    background-color: rgba(17, 17, 17, 0.7);
+  /* ガラスモーフィズム背景色（白寄り・共通） */
+  #smart-header.scrolled {
+    background-color: rgba(255, 255, 255, 0.6);
   }
   
-  body[data-theme="light"] #smart-header.scrolled {
-    background-color: rgba(246, 246, 238, 0.7);
-  }
-  
-  /* テーマに応じた背景色（PC） */
+  /* PC: 角丸ヘッダーの背景色 */
   @media (min-width: 768px) {
-    body[data-theme="dark"] #smart-header.scrolled {
+    #smart-header.scrolled {
       background-color: transparent;
     }
     
-    body[data-theme="light"] #smart-header.scrolled {
-      background-color: transparent;
-    }
-    
-    body[data-theme="dark"] #smart-header.scrolled .max-w-7xl {
-      background-color: rgba(17, 17, 17, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    body[data-theme="light"] #smart-header.scrolled .max-w-7xl {
-      background-color: rgba(246, 246, 238, 0.7);
+    #smart-header.scrolled .max-w-7xl {
+      background-color: rgba(255, 255, 255, 0.6);
       border: 1px solid rgba(0, 0, 0, 0.08);
     }
   }
   
-  /* ロゴとナビゲーションの色をテーマに連動 */
+  /* ロゴとナビゲーションの色 */
+  /* 最上部（透過時）: 白文字（FVの黒背景に対応） */
   #smart-header #header-logo img {
-    transition: filter 0.7s ease;
-  }
-  
-  body[data-theme="dark"] #smart-header #header-logo img {
     filter: brightness(0) saturate(100%) invert(100%);
-  }
-  
-  body[data-theme="light"] #smart-header #header-logo img {
-    filter: brightness(0) saturate(100%) invert(8%) sepia(10%) saturate(1000%) hue-rotate(180deg);
+    transition: filter 0.4s ease;
   }
   
   #smart-header .nav-link {
-    transition: color 0.7s ease;
-  }
-  
-  body[data-theme="dark"] #smart-header .nav-link {
     color: #E5E7EB;
+    transition: color 0.4s ease;
   }
   
-  body[data-theme="light"] #smart-header .nav-link {
+  #smart-header #menu-toggle {
+    color: #E5E7EB;
+    transition: color 0.4s ease;
+  }
+  
+  /* スクロール後（ガラス背景時）: 黒文字 */
+  #smart-header.scrolled #header-logo img {
+    filter: brightness(0) saturate(100%) invert(8%) sepia(10%) saturate(1000%) hue-rotate(180deg);
+  }
+  
+  #smart-header.scrolled .nav-link {
     color: #1F2937;
   }
   
-  body[data-theme="dark"] #smart-header #menu-toggle {
-    color: #E5E7EB;
+  #smart-header.scrolled .nav-link:hover {
+    opacity: 0.7;
   }
   
-  body[data-theme="light"] #smart-header #menu-toggle {
+  #smart-header.scrolled #menu-toggle {
     color: #1F2937;
   }
 </style>
