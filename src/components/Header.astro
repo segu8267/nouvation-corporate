@@ -2,7 +2,7 @@
 // Header Component
 ---
 
-<header id="smart-header" class="fixed w-full top-0 z-[70] transition-opacity duration-700 ease-in-out">
+<header id="smart-header" class="fixed w-full top-0 z-[70] transition-all duration-700 ease-in-out">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center h-20">
       <!-- Logo -->
@@ -71,133 +71,98 @@
   </nav>
 </header>
 
+<style>
+  /* Glassmorphism Header Styles */
+  #smart-header {
+    background-color: transparent;
+  }
+  
+  #smart-header.scrolled {
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+  
+  /* テーマに応じた背景色 */
+  body[data-theme="dark"] #smart-header.scrolled {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  body[data-theme="light"] #smart-header.scrolled {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ロゴとナビゲーションの色をテーマに連動 */
+  #smart-header #header-logo img {
+    transition: filter 0.7s ease;
+  }
+  
+  body[data-theme="dark"] #smart-header #header-logo img {
+    filter: brightness(0) saturate(100%) invert(100%);
+  }
+  
+  body[data-theme="light"] #smart-header #header-logo img {
+    filter: brightness(0) saturate(100%) invert(8%) sepia(10%) saturate(1000%) hue-rotate(180deg);
+  }
+  
+  #smart-header .nav-link {
+    transition: color 0.7s ease;
+  }
+  
+  body[data-theme="dark"] #smart-header .nav-link {
+    color: #E5E7EB;
+  }
+  
+  body[data-theme="light"] #smart-header .nav-link {
+    color: #1F2937;
+  }
+  
+  body[data-theme="dark"] #smart-header #menu-toggle {
+    color: #E5E7EB;
+  }
+  
+  body[data-theme="light"] #smart-header #menu-toggle {
+    color: #1F2937;
+  }
+</style>
+
 <script>
-  // Smart Header: Show/Hide on Scroll
+  // ============================================
+  // Glassmorphism Header with Smart Show/Hide
+  // ============================================
   let lastScrollY = 0;
   const header = document.getElementById('smart-header');
-  const pcNav = document.getElementById('pc-nav');
-  const navLinks = document.querySelectorAll('.nav-link');
   const menuToggle = document.getElementById('menu-toggle');
 
-  // 背景色を検出してテキスト色を変更する関数
-  function detectBackgroundColor() {
-    if (!header) return;
-
-    const headerRect = header.getBoundingClientRect();
-    const headerBottom = headerRect.bottom;
-    
-    // ヘッダーの下の位置にあるセクションを検出
-    const sections = document.querySelectorAll('section');
-    let currentSection = null;
-
-    // ヘッダーの下に位置するセクションを探す
-    for (const section of sections) {
-      const rect = section.getBoundingClientRect();
-      // ヘッダーの下端がセクション内にあるか、またはセクションの上端がヘッダーの下にある場合
-      if (rect.top <= headerBottom && rect.bottom >= headerRect.top) {
-        currentSection = section;
-        break;
-      }
-    }
-
-    // FVセクション（最初のセクション）の場合は黒背景と判定
-    if (!currentSection || currentSection.id === '') {
-      // FVセクション内（黒背景）なので白文字
-      setTextColor('light');
-      return;
-    }
-
-    // セクションの背景色クラスを確認
-    const bgClass = Array.from(currentSection.classList).find(cls => 
-      cls.startsWith('bg-')
-    );
-    
-    // 白っぽい背景かどうかを判定（#F6F6EE, #F0ECDE）
-    const isLightBg = bgClass && (
-      bgClass.includes('F6F6EE') || 
-      bgClass.includes('F0ECDE') ||
-      bgClass.includes('F4F4F5') || 
-      bgClass.includes('white') || 
-      bgClass.includes('gray-50') ||
-      bgClass.includes('gray-100') ||
-      bgClass.includes('gray-200')
-    );
-
-    if (isLightBg) {
-      // 白背景なので黒文字
-      setTextColor('dark');
-    } else {
-      // 黒背景なので白文字
-      setTextColor('light');
-    }
-  }
-
-  // テキスト色を設定する関数
-  function setTextColor(mode: 'dark' | 'light') {
-    const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
-    
-    if (mode === 'dark') {
-      // 黒文字（白背景用）
-      navLinks.forEach((link) => {
-        (link as HTMLElement).style.color = '#1F2937';
-      });
-      if (menuToggle) {
-        (menuToggle as HTMLElement).style.color = '#1F2937';
-      }
-      // ロゴを黒に変更
-      if (logoImg) {
-        logoImg.style.filter = 'brightness(0) saturate(100%) invert(8%) sepia(10%) saturate(1000%) hue-rotate(180deg)';
-      }
-    } else {
-      // 白文字（黒背景用）
-      navLinks.forEach((link) => {
-        (link as HTMLElement).style.color = '#E5E7EB';
-      });
-      if (menuToggle) {
-        (menuToggle as HTMLElement).style.color = '#E5E7EB';
-      }
-      // ロゴを白に変更
-      if (logoImg) {
-        logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
-      }
-    }
-  }
-
   function updateHeader() {
+    if (!header) return;
+    
     const currentScrollY = window.scrollY;
 
-    // Hide on scroll down, show on scroll up using opacity
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
-      header?.style.setProperty('opacity', '0');
-      header?.style.setProperty('pointer-events', 'none');
+    // スクロール量に応じてグラスモーフィズムを適用
+    if (currentScrollY > 50) {
+      header.classList.add('scrolled');
     } else {
-      header?.style.setProperty('opacity', '1');
-      header?.style.setProperty('pointer-events', 'auto');
-      // ヘッダーが表示されている時だけ背景色を検出
-      detectBackgroundColor();
+      header.classList.remove('scrolled');
+    }
+
+    // Hide on scroll down, show on scroll up
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      header.style.opacity = '0';
+      header.style.pointerEvents = 'none';
+    } else {
+      header.style.opacity = '1';
+      header.style.pointerEvents = 'auto';
     }
     
     lastScrollY = currentScrollY;
   }
 
-  // スクロール時にも背景色を検出（PCのみ）
-  if (window.innerWidth >= 768) {
-    window.addEventListener('scroll', detectBackgroundColor, { passive: true });
-  }
-
-  // 初期状態でも背景色を検出
-  window.addEventListener('load', () => {
-    detectBackgroundColor();
-  });
-
-  // リサイズ時にも背景色を再検出
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) {
-      detectBackgroundColor();
-    }
-  }, { passive: true });
-
   window.addEventListener('scroll', updateHeader, { passive: true });
+  
+  // 初期実行
+  updateHeader();
 
   // Mobile Menu Toggle
   const mobileMenu = document.getElementById('mobile-menu');
@@ -214,6 +179,14 @@
     // ヘッダーの背景色を変更
     if (header) {
       header.style.backgroundColor = '#464237';
+    }
+    // メニューボタンとロゴを白色に
+    if (menuToggle) {
+      (menuToggle as HTMLElement).style.color = '#FFFFFF';
+    }
+    const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
+    if (logoImg) {
+      logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
     }
   }
 

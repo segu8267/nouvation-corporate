@@ -42,15 +42,45 @@ const {
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="font-sans bg-[#111111] text-[#E5E7EB] overflow-x-hidden antialiased">
+  <body class="font-sans overflow-x-hidden antialiased" data-theme="dark">
     <div class="noise-texture"></div>
     <slot />
   </body>
 </html>
 
 <style is:global>
+  /* ============================================
+     CSS Variables - Dynamic Theme System
+     ============================================ */
+  :root {
+    --theme-transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
   body {
     font-family: 'Noto Sans JP', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color var(--theme-transition), color var(--theme-transition);
+  }
+  
+  /* Dark Theme (Default) */
+  body[data-theme="dark"] {
+    --bg-primary: #111111;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #E5E7EB;
+    --text-secondary: rgba(229, 231, 235, 0.8);
+    --accent: #d5db00;
+    --header-bg: rgba(17, 17, 17, 0.8);
+  }
+  
+  /* Light Theme */
+  body[data-theme="light"] {
+    --bg-primary: #F6F6EE;
+    --bg-secondary: #FFFFFF;
+    --text-primary: #231815;
+    --text-secondary: rgba(35, 24, 21, 0.8);
+    --accent: #d5db00;
+    --header-bg: rgba(246, 246, 238, 0.8);
   }
   
   .font-display {
@@ -172,3 +202,37 @@ const {
     letter-spacing: 0.02em;
   }
 </style>
+
+<script>
+  // ============================================
+  // Dynamic Theme Switcher with IntersectionObserver
+  // ============================================
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const sections = document.querySelectorAll('[data-section-theme]');
+    
+    if (sections.length === 0) return;
+    
+    // IntersectionObserver setup
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px', // 画面中央に来た時に発火
+      threshold: 0
+    };
+    
+    const themeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionTheme = entry.target.getAttribute('data-section-theme') as 'dark' | 'light';
+          if (sectionTheme && body.getAttribute('data-theme') !== sectionTheme) {
+            body.setAttribute('data-theme', sectionTheme);
+          }
+        }
+      });
+    }, observerOptions);
+    
+    // すべてのテーマ付きセクションを監視
+    sections.forEach((section) => themeObserver.observe(section));
+  });
+</script>
