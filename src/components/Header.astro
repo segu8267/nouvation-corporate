@@ -4,7 +4,7 @@
 
 <header id="smart-header" class="fixed w-full top-0 z-[70] transition-all duration-700 ease-in-out">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="flex justify-between items-center h-20">
+    <div class="flex justify-between items-center h-20 md:h-16">
       <!-- Logo -->
       <a href="/" id="header-logo" class="hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded relative z-[80]" aria-label="NOUVATION トップページへ">
         <img src="/images/logo.svg" alt="NOUVATION" class="h-8 md:h-10 w-auto" />
@@ -75,22 +75,64 @@
   /* Glassmorphism Header Styles */
   #smart-header {
     background-color: transparent;
+    padding: 0;
   }
   
+  #smart-header .max-w-7xl {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* モバイル: スクロール時はシンプルなグラスモーフィズム */
   #smart-header.scrolled {
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
   }
   
-  /* テーマに応じた背景色 */
+  /* PC: スクロール時は角丸＋独立デザイン */
+  @media (min-width: 768px) {
+    #smart-header.scrolled {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    
+    #smart-header.scrolled .max-w-7xl {
+      margin: 1rem auto;
+      border-radius: 9999px;
+      padding: 0.5rem 2rem;
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+  }
+  
+  /* テーマに応じた背景色（モバイル） */
   body[data-theme="dark"] #smart-header.scrolled {
-    background-color: var(--header-bg);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(17, 17, 17, 0.7);
   }
   
   body[data-theme="light"] #smart-header.scrolled {
-    background-color: var(--header-bg);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(246, 246, 238, 0.7);
+  }
+  
+  /* テーマに応じた背景色（PC） */
+  @media (min-width: 768px) {
+    body[data-theme="dark"] #smart-header.scrolled {
+      background-color: transparent;
+    }
+    
+    body[data-theme="light"] #smart-header.scrolled {
+      background-color: transparent;
+    }
+    
+    body[data-theme="dark"] #smart-header.scrolled .max-w-7xl {
+      background-color: rgba(17, 17, 17, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    body[data-theme="light"] #smart-header.scrolled .max-w-7xl {
+      background-color: rgba(246, 246, 238, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
   }
   
   /* ロゴとナビゲーションの色をテーマに連動 */
