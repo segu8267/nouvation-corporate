@@ -308,20 +308,27 @@
     // ヘッダーの背景色を変更
     if (header) {
       header.style.backgroundColor = '#464237';
+      header.style.zIndex = '65'; // メニューの上に表示
     }
     // メニューボタンとロゴを白色に（即座に適用）
     const menuToggleEl = document.getElementById('menu-toggle');
     const closeIconEl = document.getElementById('close-icon');
     const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
+    const logoLink = document.getElementById('header-logo');
     
     if (menuToggleEl) {
       (menuToggleEl as HTMLElement).style.color = '#FFFFFF';
+      (menuToggleEl as HTMLElement).style.zIndex = '100';
     }
     if (closeIconEl) {
       (closeIconEl as Element).setAttribute('stroke', '#FFFFFF');
     }
     if (logoImg) {
       logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
+      logoImg.style.display = 'block';
+    }
+    if (logoLink) {
+      (logoLink as HTMLElement).style.zIndex = '100';
     }
     
     // 念のためupdateHeaderColorsも呼ぶ
@@ -335,9 +342,18 @@
     menuToggle?.setAttribute('aria-expanded', 'false');
     menuToggle?.setAttribute('aria-label', 'メニューを開く');
     document.body.style.overflow = ''; // スクロールを有効化
-    // ヘッダーの背景色を元に戻す
+    // ヘッダーの背景色とz-indexを元に戻す
     if (header) {
       header.style.backgroundColor = '';
+      header.style.zIndex = '';
+    }
+    const menuToggleEl = document.getElementById('menu-toggle');
+    const logoLink = document.getElementById('header-logo');
+    if (menuToggleEl) {
+      (menuToggleEl as HTMLElement).style.zIndex = '';
+    }
+    if (logoLink) {
+      (logoLink as HTMLElement).style.zIndex = '';
     }
     // スクロール状態に応じて色を更新
     updateHeaderColors();
