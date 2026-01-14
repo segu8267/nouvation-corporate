@@ -82,44 +82,34 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  /* モバイル: スクロール時はシンプルなグラスモーフィズム */
+  /* モバイル: スクロール時は角丸＋独立デザイン */
   #smart-header.scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  
+  #smart-header.scrolled .max-w-7xl {
+    margin: 0.75rem auto;
+    border-radius: 9999px;
+    padding: 0.5rem 1.5rem;
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
   }
   
   /* PC: スクロール時は角丸＋独立デザイン */
   @media (min-width: 768px) {
-    #smart-header.scrolled {
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-    
     #smart-header.scrolled .max-w-7xl {
       margin: 1rem auto;
-      border-radius: 9999px;
       padding: 0.5rem 2rem;
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     }
   }
   
-  /* ガラスモーフィズム背景色（白寄り・共通） */
+  /* ガラスモーフィズム背景色（共通） */
   #smart-header.scrolled {
-    background-color: rgba(255, 255, 255, 0.6);
-  }
-  
-  /* PC: 角丸ヘッダーの背景色 */
-  @media (min-width: 768px) {
-    #smart-header.scrolled {
-      background-color: transparent;
-    }
-    
-    #smart-header.scrolled .max-w-7xl {
-      background-color: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-    }
+    background-color: transparent;
   }
   
   /* ロゴとナビゲーションの色 */
@@ -141,7 +131,8 @@
   
   /* スクロール後（ガラス背景時）: 黒文字 */
   #smart-header.scrolled #header-logo img {
-    filter: brightness(0) saturate(100%) invert(8%) sepia(10%) saturate(1000%) hue-rotate(180deg);
+    filter: brightness(0) saturate(100%);
+    transition: filter 0.4s ease;
   }
   
   #smart-header.scrolled .nav-link {
@@ -153,7 +144,11 @@
   }
   
   #smart-header.scrolled #menu-toggle {
-    color: #1F2937;
+    color: #000000;
+  }
+  
+  #smart-header.scrolled #menu-toggle svg {
+    stroke: #000000;
   }
 </style>
 
@@ -164,6 +159,46 @@
   let lastScrollY = 0;
   const header = document.getElementById('smart-header');
   const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  function updateHeaderColors() {
+    if (!header) return;
+    const isScrolled = header.classList.contains('scrolled');
+    const menuToggleEl = document.getElementById('menu-toggle');
+    const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
+    const isMenuOpen = !mobileMenu?.classList.contains('hidden');
+    
+    // メニューが開いている時は白
+    if (isMenuOpen) {
+      if (menuToggleEl) {
+        (menuToggleEl as HTMLElement).style.color = '#FFFFFF';
+      }
+      if (logoImg) {
+        logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
+      }
+    } else {
+      // メニューが閉じている時は、スクロール状態に応じて
+      if (isScrolled) {
+        // ガラス背景時は黒
+        if (menuToggleEl) {
+          (menuToggleEl as HTMLElement).style.color = '#000000';
+        }
+        if (logoImg) {
+          logoImg.style.filter = 'brightness(0) saturate(100%)';
+        }
+      } else {
+        // 最上部は白
+        if (menuToggleEl) {
+          (menuToggleEl as HTMLElement).style.color = '#E5E7EB';
+        }
+        if (logoImg) {
+          logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
+        }
+      }
+    }
+  }
 
   function updateHeader() {
     if (!header) return;
@@ -186,6 +221,12 @@
       header.style.pointerEvents = 'auto';
     }
     
+    // 色を更新（メニューが開いていない時のみ）
+    const isMenuOpen = !mobileMenu?.classList.contains('hidden');
+    if (!isMenuOpen) {
+      updateHeaderColors();
+    }
+    
     lastScrollY = currentScrollY;
   }
 
@@ -193,11 +234,7 @@
   
   // 初期実行
   updateHeader();
-
-  // Mobile Menu Toggle
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
-  const closeIcon = document.getElementById('close-icon');
+  updateHeaderColors();
 
   function openMobileMenu() {
     mobileMenu?.classList.remove('hidden');
@@ -211,13 +248,7 @@
       header.style.backgroundColor = '#464237';
     }
     // メニューボタンとロゴを白色に
-    if (menuToggle) {
-      (menuToggle as HTMLElement).style.color = '#FFFFFF';
-    }
-    const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
-    if (logoImg) {
-      logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
-    }
+    updateHeaderColors();
   }
 
   function closeMobileMenu() {
@@ -231,6 +262,8 @@
     if (header) {
       header.style.backgroundColor = '';
     }
+    // スクロール状態に応じて色を更新
+    updateHeaderColors();
   }
 
   menuToggle?.addEventListener('click', () => {
