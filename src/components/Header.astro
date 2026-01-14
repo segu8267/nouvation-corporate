@@ -131,9 +131,10 @@
   /* PC: スクロール時は角丸＋独立デザイン（元の高さを維持） */
   @media (min-width: 768px) {
     #smart-header.scrolled .max-w-7xl {
-      margin: 16px auto;
+      margin: 16px 12px;
       padding: 0.5rem 2rem;
       height: auto;
+      max-width: calc(100% - 24px);
     }
     
     #smart-header.scrolled .max-w-7xl > div {
