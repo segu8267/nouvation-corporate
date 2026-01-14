@@ -6,17 +6,17 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center h-20 md:h-16">
       <!-- Logo -->
-      <a href="/" id="header-logo" class="hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded relative z-[80]" aria-label="NOUVATION トップページへ">
+      <a href="/" id="header-logo" class="hover:opacity-80 transition-opacity focus:outline-none rounded relative z-[80]" aria-label="NOUVATION トップページへ">
         <img src="/images/logo.svg" alt="NOUVATION" class="h-8 md:h-10 w-auto" />
       </a>
 
       <!-- PC Navigation -->
       <nav id="pc-nav" class="hidden md:flex space-x-8 text-sm font-bold transition-colors duration-300" aria-label="メインナビゲーション">
-        <a href="#news" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">News</a>
-        <a href="#mission" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Mission</a>
-        <a href="#services" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Services</a>
-        <a href="#story" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Story</a>
-        <a href="#voice" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4FF00] focus:ring-offset-2 focus:ring-offset-[#111111] rounded px-2 py-1">Voice</a>
+        <a href="#news" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none rounded px-2 py-1">News</a>
+        <a href="#mission" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none rounded px-2 py-1">Mission</a>
+        <a href="#services" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none rounded px-2 py-1">Services</a>
+        <a href="#story" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none rounded px-2 py-1">Story</a>
+        <a href="#voice" class="nav-link hover:text-[#D4FF00] transition-colors focus:outline-none rounded px-2 py-1">Voice</a>
       </nav>
 
       <!-- PC CTA Button -->
@@ -222,10 +222,10 @@
         (menuToggleEl as HTMLElement).style.color = '#FFFFFF';
       }
       if (menuIconEl) {
-        (menuIconEl as SVGElement).setAttribute('stroke', '#FFFFFF');
+        (menuIconEl as Element).setAttribute('stroke', '#FFFFFF');
       }
       if (closeIconEl) {
-        (closeIconEl as SVGElement).setAttribute('stroke', '#FFFFFF');
+        (closeIconEl as Element).setAttribute('stroke', '#FFFFFF');
       }
       if (logoImg) {
         logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
@@ -238,10 +238,10 @@
           (menuToggleEl as HTMLElement).style.color = '#000000';
         }
         if (menuIconEl) {
-          (menuIconEl as SVGElement).setAttribute('stroke', '#000000');
+          (menuIconEl as Element).setAttribute('stroke', '#000000');
         }
         if (closeIconEl) {
-          (closeIconEl as SVGElement).setAttribute('stroke', '#000000');
+          (closeIconEl as Element).setAttribute('stroke', '#000000');
         }
         if (logoImg) {
           logoImg.style.filter = 'brightness(0) saturate(100%)';
@@ -252,10 +252,10 @@
           (menuToggleEl as HTMLElement).style.color = '#E5E7EB';
         }
         if (menuIconEl) {
-          (menuIconEl as SVGElement).setAttribute('stroke', '#E5E7EB');
+          (menuIconEl as Element).setAttribute('stroke', '#E5E7EB');
         }
         if (closeIconEl) {
-          (closeIconEl as SVGElement).setAttribute('stroke', '#E5E7EB');
+          (closeIconEl as Element).setAttribute('stroke', '#E5E7EB');
         }
         if (logoImg) {
           logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
@@ -320,7 +320,7 @@
       (menuToggleEl as HTMLElement).style.color = '#FFFFFF';
     }
     if (closeIconEl) {
-      (closeIconEl as SVGElement).setAttribute('stroke', '#FFFFFF');
+      (closeIconEl as Element).setAttribute('stroke', '#FFFFFF');
     }
     if (logoImg) {
       logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
