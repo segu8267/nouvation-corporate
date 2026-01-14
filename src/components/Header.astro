@@ -310,13 +310,16 @@
       header.style.backgroundColor = '#464237';
       header.style.zIndex = '80'; // メニューの上に表示
     }
-    // ガラス背景の角丸部分を非表示にする
+    // ガラス背景の角丸部分の背景を統一
     const maxWidthEl = header?.querySelector('.max-w-7xl') as HTMLElement | null;
     if (maxWidthEl) {
-      maxWidthEl.style.display = 'none';
+      maxWidthEl.style.backgroundColor = '#464237';
+      maxWidthEl.style.backdropFilter = 'none';
+      maxWidthEl.style.setProperty('-webkit-backdrop-filter', 'none');
     }
     // メニューボタンとロゴを白色に（即座に適用）
     const menuToggleEl = document.getElementById('menu-toggle');
+    const menuIconEl = document.getElementById('menu-icon');
     const closeIconEl = document.getElementById('close-icon');
     const logoImg = document.querySelector('#header-logo img') as HTMLImageElement | null;
     const logoLink = document.getElementById('header-logo');
@@ -325,12 +328,16 @@
       (menuToggleEl as HTMLElement).style.color = '#FFFFFF';
       (menuToggleEl as HTMLElement).style.zIndex = '100';
     }
+    if (menuIconEl) {
+      (menuIconEl as Element).setAttribute('stroke', '#FFFFFF');
+    }
     if (closeIconEl) {
       (closeIconEl as Element).setAttribute('stroke', '#FFFFFF');
     }
     if (logoImg) {
       logoImg.style.filter = 'brightness(0) saturate(100%) invert(100%)';
       logoImg.style.display = 'block';
+      logoImg.style.opacity = '1';
     }
     if (logoLink) {
       (logoLink as HTMLElement).style.zIndex = '100';
@@ -352,10 +359,12 @@
       header.style.backgroundColor = '';
       header.style.zIndex = '';
     }
-    // ガラス背景の角丸部分を表示に戻す
+    // ガラス背景の角丸部分のスタイルを元に戻す
     const maxWidthEl = header?.querySelector('.max-w-7xl') as HTMLElement | null;
     if (maxWidthEl) {
-      maxWidthEl.style.display = '';
+      maxWidthEl.style.backgroundColor = '';
+      maxWidthEl.style.backdropFilter = '';
+      maxWidthEl.style.removeProperty('-webkit-backdrop-filter');
     }
     const menuToggleEl = document.getElementById('menu-toggle');
     const logoLink = document.getElementById('header-logo');
