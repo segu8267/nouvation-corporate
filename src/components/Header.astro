@@ -79,28 +79,20 @@
   }
   
   #smart-header .max-w-7xl {
-    transition: margin 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                border 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* 背景と色を先に変更（速い） */
+    transition: backdrop-filter 0.2s ease,
+                background-color 0.2s ease,
+                box-shadow 0.2s ease,
+                /* 高さとレイアウトは後から変更（遅い） */
+                margin 0.3s ease 0.1s,
+                border-radius 0.3s ease 0.1s,
+                padding 0.3s ease 0.1s,
+                height 0.3s ease 0.1s;
   }
   
   #smart-header .max-w-7xl > div {
-    transition: height 0.2s ease;
-  }
-  
-  /* ガラス背景時の高さ遷移を即座に */
-  #smart-header.scrolled .max-w-7xl {
-    transition: margin 0.3s ease,
-                border-radius 0.3s ease,
-                padding 0.3s ease,
-                backdrop-filter 0.3s ease,
-                background-color 0.3s ease,
-                box-shadow 0.3s ease,
-                border 0.3s ease;
+    /* 高さの変更は後から */
+    transition: height 0.3s ease 0.1s;
   }
   
   /* モバイル: スクロール時は角丸＋独立デザイン */
@@ -118,7 +110,7 @@
     -webkit-backdrop-filter: blur(12px) saturate(180%);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     background-color: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: none;
     display: flex;
     align-items: center;
   }
@@ -153,27 +145,32 @@
   /* 最上部（透過時）: 白文字（FVの黒背景に対応） */
   #smart-header #header-logo img {
     filter: brightness(0) saturate(100%) invert(100%);
-    transition: filter 0.4s ease;
+    transition: filter 0.2s ease;
   }
   
   #smart-header .nav-link {
     color: #E5E7EB;
-    transition: color 0.4s ease;
+    transition: color 0.2s ease;
   }
   
   #smart-header #menu-toggle {
     color: #E5E7EB;
-    transition: color 0.4s ease;
+    transition: color 0.2s ease;
+  }
+  
+  #smart-header #menu-toggle svg {
+    transition: stroke 0.2s ease;
   }
   
   /* スクロール後（ガラス背景時）: 黒文字 */
   #smart-header.scrolled #header-logo img {
     filter: brightness(0) saturate(100%);
-    transition: filter 0.4s ease;
+    transition: filter 0.2s ease;
   }
   
   #smart-header.scrolled .nav-link {
     color: #1F2937;
+    transition: color 0.2s ease;
   }
   
   #smart-header.scrolled .nav-link:hover {
@@ -182,10 +179,12 @@
   
   #smart-header.scrolled #menu-toggle {
     color: #000000;
+    transition: color 0.2s ease;
   }
   
   #smart-header.scrolled #menu-toggle svg {
     stroke: #000000;
+    transition: stroke 0.2s ease;
   }
 </style>
 
