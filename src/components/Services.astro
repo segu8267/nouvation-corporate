@@ -97,12 +97,16 @@
           </div>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-12">
           <div class="flex justify-center w-full">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOIuN5gjy6W/" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:16px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 0; width:100%; max-width:540px; min-width:280px;"></blockquote>
+            <div class="w-full max-w-[320px] shadow-sm rounded-2xl overflow-hidden">
+              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOIuN5gjy6W/" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:0; margin: 0; width:100%; min-width:100%;"></blockquote>
+            </div>
           </div>
           <div class="flex justify-center w-full">
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKcekJk6--/" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:16px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 0; width:100%; max-width:540px; min-width:280px;"></blockquote>
+            <div class="w-full max-w-[320px] shadow-sm rounded-2xl overflow-hidden">
+              <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKcekJk6--/" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:0; margin: 0; width:100%; min-width:100%;"></blockquote>
+            </div>
           </div>
         </div>
         <script is:inline src="//www.instagram.com/embed.js"></script>
@@ -202,9 +206,16 @@
 </section>
 
 <style>
-  /* 埋め込み後に生成されるiframeの余白をリセット */
+  /* Instagram埋め込みの強制フィット設定 */
   :global(.instagram-media) {
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* 埋め込み後のiframeの最小幅制限を解除 */
+  :global(.instagram-media-rendered iframe) {
+    min-width: 100% !important;
   }
 </style>
