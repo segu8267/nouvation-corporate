@@ -229,7 +229,12 @@
 
   /* はみ出したヘッダーと、下すぎるフッターをカットする */
   .instagram-clip-box {
-    height: 440px; /* 動画といいね数が見える絶妙な高さに固定 */
+    height: 437px; /* 動画といいね数が見える絶妙な高さに固定 */
     overflow: hidden;
+  }
+  @media (max-width: 768px) {
+    .instagram-clip-box {
+      height: 433px;
+    }
   }
 </style>
