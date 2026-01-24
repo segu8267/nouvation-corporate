@@ -1,7 +1,5 @@
 ---
 // Services Component
-import { getMarketPrices } from "../lib/market";
-const marketPrices = await getMarketPrices();
 ---
 
 <!-- Section Title -->
@@ -66,8 +64,8 @@ const marketPrices = await getMarketPrices();
         </div>
       </div>
 
-      <!-- Data for Client-side JS -->
-      <div id="market-data-container" data-prices={JSON.stringify(marketPrices)} hidden></div>
+      <!-- Data API URL for Client-side Fetch -->
+      <div id="market-data-container" data-api="https://script.google.com/macros/s/AKfycbx7ESPQ9ohWe0e0fYARWrqtZwRhHl2pa0Euo8YuSGHMqX3A3k4hbUuZX8Ft3dIS579e/exec?type=market" hidden></div>
     </div>
   </div>
 </section>
@@ -238,16 +236,35 @@ const marketPrices = await getMarketPrices();
     unit: string;
   }
 
-  function initChart() {
+  async function initChart() {
     const container = document.getElementById('market-data-container');
     if (!container) return;
 
-    // データの読み込み
+    const apiUrl = container.getAttribute('data-api');
+    if (!apiUrl) return;
+
+    // データの読み込み（クライアントサイド・フェッチ）
     let prices: MarketPrice[] = [];
     try {
-      prices = JSON.parse(container.dataset.prices || '[]');
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const rawData = await response.json();
+      
+      // GASの構造（配列か、{data:[]}か）に合わせて取得
+      const rawPrices = Array.isArray(rawData) ? rawData : (rawData.data || rawData.contents || []);
+      
+      // データの正規化（日本語キー対応）
+      prices = rawPrices.map((d: any) => ({
+        date: d.date || d.日付 || "",
+        item: d.item || d.品目 || "",
+        market: d.market || d.市場 || "",
+        price: Number(d.price || d.価格 || 0),
+        unit: d.unit || d.単位 || "kg"
+      })).filter((d: any) => d.date && d.item);
+
     } catch (e) {
-      console.error("JSON Parse Error:", e);
+      console.error("Fetch or Parse Error:", e);
+      return;
     }
 
     console.log("Market Prices Data Count:", prices.length);
