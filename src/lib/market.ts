@@ -13,15 +13,20 @@ export async function getMarketPrices(): Promise<MarketPriceData[]> {
     const response = await fetch(GAS_URL);
     if (!response.ok) throw new Error('Network response was not ok');
     
-    const data = await response.json();
+    const rawData = await response.json();
     
-    // GAS側で返却されるデータ構造に合わせて取得
-    // 配列ならそのまま、そうでなければ .data または .contents などを参照
-    if (Array.isArray(data)) return data;
-    if (data && data.data && Array.isArray(data.data)) return data.data;
-    if (data && data.contents && Array.isArray(data.contents)) return data.contents;
+    // GASの戻り値が { data: [...] } か [...] かを判定
+    const data = Array.isArray(rawData) ? rawData : (rawData.data || rawData.contents || []);
     
-    return [];
+    // データの正規化（キー名が日本語の場合などの対策）
+    return data.map((d: any) => ({
+      date: d.date || d.日付 || "",
+      item: d.item || d.品目 || "",
+      market: d.market || d.市場 || "",
+      price: Number(d.price || d.価格 || 0),
+      unit: d.unit || d.単位 || "kg"
+    })).filter((d: any) => d.date && d.item); // 不完全なデータを除外
+    
   } catch (error) {
     console.error("Failed to fetch market prices:", error);
     return [];
