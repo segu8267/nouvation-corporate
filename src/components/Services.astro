@@ -47,10 +47,8 @@
         <div class="mb-6 flex flex-wrap gap-4 items-center justify-between">
           <div class="flex gap-2">
             <select id="itemFilter" class="bg-[#F6F6EE] border-none rounded-lg px-4 py-2 text-sm font-bold text-[#231815] focus:ring-2 focus:ring-[#2e7d32] cursor-pointer">
-              <option value="all">すべての品目</option>
             </select>
             <select id="marketFilter" class="bg-[#F6F6EE] border-none rounded-lg px-4 py-2 text-sm font-bold text-[#231815] focus:ring-2 focus:ring-[#2e7d32] cursor-pointer">
-              <option value="all">すべての市場</option>
             </select>
           </div>
           <div class="text-right">
@@ -293,9 +291,9 @@
       return;
     }
 
-    // 既存の選択肢をクリア（「すべての〜」だけ残す）
-    while (itemFilter.options.length > 1) itemFilter.remove(1);
-    while (marketFilter.options.length > 1) marketFilter.remove(1);
+    // 既存の選択肢をクリア
+    itemFilter.innerHTML = '';
+    marketFilter.innerHTML = '';
 
     // フィルターの選択肢を生成
     const items = [...new Set(prices.map(p => p.item))].filter(Boolean).sort();
@@ -322,12 +320,20 @@
       const selectedMarket = marketFilter.value;
 
       let filtered = prices.filter(p => 
-        (selectedItem === 'all' || p.item === selectedItem) &&
-        (selectedMarket === 'all' || p.market === selectedMarket)
+        p.item === selectedItem && p.market === selectedMarket
       );
 
       // 日付順にソート（重要：2025-12-08などの形式に対応）
       filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+      // 直近1週間（最新の日付から7日前まで）に絞り込む
+      if (filtered.length > 0) {
+        const lastDate = new Date(filtered[filtered.length - 1].date);
+        const oneWeekAgo = new Date(lastDate);
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        
+        filtered = filtered.filter(p => new Date(p.date) >= oneWeekAgo);
+      }
 
       if (chart) {
         chart.destroy();
