@@ -250,18 +250,19 @@
       if (!response.ok) throw new Error('Network response was not ok');
       const rawData = await response.json();
       
-      // GASの構造（配列か、{data:[]}か）に合わせて取得
-      const rawPrices = Array.isArray(rawData) ? rawData : (rawData.data || rawData.contents || []);
+      // 🕵️ ここを rows に対応するように修正！
+      const rawPrices = Array.isArray(rawData) ? rawData : (rawData.rows || rawData.data || []);
       
-      // データの正規化（日本語キー対応）
+      // データの正規化
       prices = rawPrices.map((d: any) => ({
-        date: d.date || d.日付 || "",
-        item: d.item || d.品目 || "",
-        market: d.market || d.市場 || "",
-        price: Number(d.price || d.価格 || 0),
-        unit: d.unit || d.単位 || "kg"
+        date: d.date || "",
+        item: d.item || "",
+        market: d.market || "",
+        price: Number(d.price || 0),
+        unit: d.unit || "円/kg"
       })).filter((d: any) => d.date && d.item);
 
+      console.log("Successfully loaded prices:", prices.length);
     } catch (e) {
       console.error("Fetch or Parse Error:", e);
       return;
