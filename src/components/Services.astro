@@ -1,5 +1,7 @@
 ---
 // Services Component
+import { getMarketPrices } from "../lib/market";
+const marketPrices = await getMarketPrices();
 ---
 
 <!-- Section Title -->
@@ -67,8 +69,8 @@
         </div>
       </div>
 
-      <!-- Data API URL for Client-side Fetch -->
-      <div id="market-data-container" data-api="https://script.google.com/macros/s/AKfycbx7ESPQ9ohWe0e0fYARWrqtZwRhHl2pa0Euo8YuSGHMqX3A3k4hbUuZX8Ft3dIS579e/exec?type=market" hidden></div>
+      <!-- Pre-fetched Data for SSG -->
+      <div id="market-data-container" data-prices={JSON.stringify(marketPrices)} hidden></div>
     </div>
   </div>
 </section>
@@ -243,44 +245,22 @@
     const container = document.getElementById('market-data-container');
     if (!container) return;
 
-    const apiUrl = container.getAttribute('data-api');
-    if (!apiUrl) return;
-
-    // データの読み込み（クライアントサイド・フェッチ）
+    // データの読み込み（SSG: 埋め込まれたデータを即座に取得）
     let prices: MarketPrice[] = [];
     try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const rawData = await response.json();
-      
-      // 🕵️ ここを rows に対応するように修正！
-      const rawPrices = Array.isArray(rawData) ? rawData : (rawData.rows || rawData.data || []);
-      
-      // データの正規化
-      prices = rawPrices.map((d: any) => ({
-        date: d.date || "",
-        item: d.item || "",
-        market: d.market || "",
-        price: Number(d.price || 0),
-        unit: d.unit || "円/kg"
-      })).filter((d: any) => d.date && d.item);
-
-      console.log("Successfully loaded prices:", prices.length);
-
-      // 🕵️ ローディングを非表示にする
-      const loader = document.getElementById('chartLoader');
-      if (loader) {
-        loader.style.opacity = '0';
-        setTimeout(() => {
-          if (loader) loader.style.display = 'none';
-        }, 500);
-      }
+      prices = JSON.parse(container.dataset.prices || '[]');
     } catch (e) {
-      console.error("Fetch or Parse Error:", e);
+      console.error("Data Load Error:", e);
       return;
     }
 
     console.log("Market Prices Data Count:", prices.length);
+
+    // ローディングを即座に非表示にする
+    const loader = document.getElementById('chartLoader');
+    if (loader) {
+      loader.style.display = 'none';
+    }
 
     const canvas = document.getElementById('marketChart') as HTMLCanvasElement;
     const itemFilter = document.getElementById('itemFilter') as HTMLSelectElement;
