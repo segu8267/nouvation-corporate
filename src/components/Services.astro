@@ -59,7 +59,12 @@
           </div>
         </div>
         
-        <div class="relative h-[300px] md:h-[400px] w-full">
+        <div class="relative h-[300px] md:h-[400px] w-full flex items-center justify-center">
+          <!-- ローディング表示 -->
+          <div id="chartLoader" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm transition-opacity duration-500">
+            <div class="w-12 h-12 border-4 border-[#2e7d32]/20 border-t-[#2e7d32] rounded-full animate-spin mb-4"></div>
+            <p class="text-[#231815]/60 text-sm font-bold animate-pulse">市場データを取得中...</p>
+          </div>
           <canvas id="marketChart"></canvas>
         </div>
       </div>
@@ -263,6 +268,15 @@
       })).filter((d: any) => d.date && d.item);
 
       console.log("Successfully loaded prices:", prices.length);
+
+      // 🕵️ ローディングを非表示にする
+      const loader = document.getElementById('chartLoader');
+      if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+          if (loader) loader.style.display = 'none';
+        }, 500);
+      }
     } catch (e) {
       console.error("Fetch or Parse Error:", e);
       return;
@@ -421,5 +435,21 @@
     .instagram-clip-box {
       height: 540px;
     }
+  }
+
+  /* ローディングアニメーション */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 </style>
