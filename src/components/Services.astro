@@ -68,6 +68,13 @@ const marketPrices = await getMarketPrices();
           <canvas id="marketChart"></canvas>
         </div>
       </div>
+      
+      <!-- 注釈テキスト -->
+      <div class="mt-4 px-2">
+        <p class="text-[10px] md:text-xs text-[#231815]/60 leading-relaxed">
+          ※価格は原則「中値（1kgあたり）」を表示。中値が取得できない場合のみ「高値」を代替表示。産地は取引量の多い主産地を優先。
+        </p>
+      </div>
 
       <!-- Pre-fetched Data for SSG -->
       <div id="market-data-container" data-prices={JSON.stringify(marketPrices)} hidden></div>
