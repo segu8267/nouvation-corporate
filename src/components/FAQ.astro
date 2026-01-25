@@ -1,14 +1,46 @@
 ---
 // FAQ Component
 
-const faqs = [
+const faqGroups = [
   {
-    question: 'Q. 企業ですが、協業や広告掲載は可能ですか？',
-    answer: 'A. はい、可能です。お問い合わせフォームよりご連絡ください。'
+    title: "", // 全般
+    items: [
+      {
+        question: 'Q. NOUVATIONとはなんですか？',
+        answer: 'A. 仮テキスト'
+      },
+      {
+        question: 'Q. 何ができますか？',
+        answer: 'A. 仮テキスト'
+      }
+    ]
   },
   {
-    question: 'Q. サービスは誰でも使えますか？',
-    answer: 'A. はい、農家の方はもちろん、農業関係者様もご利用いただけます。'
+    title: "農業AIサポートに関するQ＆A",
+    items: [
+      {
+        question: 'Q. 農業AIサポートは何ができますか？',
+        answer: 'A. 仮テキスト'
+      }
+    ]
+  },
+  {
+    title: "市場価格に関するQ＆A",
+    items: [
+      {
+        question: 'Q. 表示している価格は「高値・中値・安値」のどれですか？平均ですか？',
+        answer: 'A. 仮テキスト'
+      }
+    ]
+  },
+  {
+    title: "法人・提携に関するQ＆A",
+    items: [
+      {
+        question: 'Q. 企業・団体との提携やスポンサー相談はできますか？',
+        answer: 'A. 仮テキスト'
+      }
+    ]
   }
 ];
 ---
@@ -21,11 +53,23 @@ const faqs = [
     </h2>
 
     <!-- FAQ Items -->
-    <div class="space-y-6">
-      {faqs.map((faq) => (
-        <div class="bg-white border border-[#231815]/10 rounded-2xl p-8 fade-up transition-shadow">
-          <h3 class="font-bold text-[#231815] mb-3">{faq.question}</h3>
-          <p class="text-sm text-[#231815] leading-loose">{faq.answer}</p>
+    <div class="space-y-12">
+      {faqGroups.map((group) => (
+        <div class="fade-up">
+          {group.title && (
+            <h3 class="text-sm font-bold text-[#2e7d32] mb-6 flex items-center">
+              <span class="w-1 h-4 bg-[#2e7d32] mr-2"></span>
+              {group.title}
+            </h3>
+          )}
+          <div class="space-y-4">
+            {group.items.map((item) => (
+              <div class="bg-white border border-[#231815]/10 rounded-2xl p-6 md:p-8 hover:shadow-md transition-shadow">
+                <h4 class="font-bold text-[#231815] mb-3 text-base md:text-lg">{item.question}</h4>
+                <p class="text-sm md:text-base text-[#231815] leading-loose opacity-80">{item.answer}</p>
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>
