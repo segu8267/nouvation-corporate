@@ -139,10 +139,12 @@
   /* PC: スクロール時は角丸＋独立デザイン（元の高さを維持） */
   @media (min-width: 768px) {
     #smart-header.scrolled .max-w-7xl {
-      margin: 16px 12px;
+      margin: 16px auto; /* 左右中央寄せ */
       padding: 0.5rem 2rem;
       height: auto;
-      max-width: calc(100% - 24px);
+      /* コンテンツ幅に合わせる（max-w-7xl = 1280px から左右パディング分を引いた幅） */
+      width: calc(100% - 48px); 
+      max-width: 1232px; /* 1280px - 48px */
     }
     
     #smart-header.scrolled .max-w-7xl > div {
