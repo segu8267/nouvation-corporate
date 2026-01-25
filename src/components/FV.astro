@@ -20,8 +20,8 @@
   
   <!-- Content -->
   <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
-    <h1 id="typing-text" class="font-extrabold mb-8 text-white tracking-normal min-h-[2.4em]" style="font-size: 4rem; line-height: 1.2;">
-      <!-- JavaScriptで文字を注入します -->
+    <h1 id="fv-title" class="font-extrabold mb-8 text-white tracking-tight opacity-0 translate-y-4 transition-all duration-1000 ease-out" style="font-size: 5rem; line-height: 1.1;">
+      農業界に、情報で革新を。
     </h1>
     <p class="text-lg md:text-2xl font-medium text-[#E5E7EB] leading-loose">
       農家が報われる社会を、情報とつながりで実現する<br class="hidden md:block" />
@@ -31,44 +31,19 @@
 </section>
 
 <script>
-  function initTyping() {
-    const target = document.getElementById('typing-text');
-    if (!target) return;
+  function initFVAnimation() {
+    const title = document.getElementById('fv-title');
+    if (!title) return;
 
-    const fullText = "農業界に\n情報で革新を";
-    const chars = fullText.split("");
-    target.innerHTML = ""; // 初期化
-
-    let i = 0;
-    function type() {
-      if (!target) return; // 安全性のためのチェック
-
-      if (i < chars.length) {
-        if (chars[i] === "\n") {
-          target.insertAdjacentHTML('beforeend', '<br />');
-        } else {
-          const span = document.createElement('span');
-          span.textContent = chars[i];
-          span.style.opacity = '0';
-          span.style.transition = 'opacity 0.2s ease';
-          target.appendChild(span);
-          
-          // 次のフレームで表示
-          setTimeout(() => {
-            span.style.opacity = '1';
-          }, 10);
-        }
-        i++;
-        setTimeout(type, 120); // 0.12秒間隔でタイピング
-      }
-    }
-
-    // ページの読み込み完了から少し遅らせて開始
-    setTimeout(type, 500);
+    // ページ読み込みから少し遅らせてアニメーション開始
+    setTimeout(() => {
+      title.classList.remove('opacity-0', 'translate-y-4');
+      title.classList.add('opacity-100', 'translate-y-0');
+    }, 500);
   }
 
   // Astroの遷移対応
-  document.addEventListener('astro:page-load', initTyping);
+  document.addEventListener('astro:page-load', initFVAnimation);
   // 初回実行
-  initTyping();
+  initFVAnimation();
 </script>
