@@ -108,7 +108,7 @@ const marketPrices = await getMarketPrices();
           
           <div class="mt-8 p-6 bg-white border border-[#231815]/20 rounded-2xl inline-block">
             <div class="font-display text-4xl font-bold text-[#231815]">
-              20,000<span class="text-2xl">+</span>
+              <span id="followerCount">0</span><span class="text-2xl">+</span>
               <span class="text-sm font-normal text-[#231815]/60 ml-2">Followers</span>
             </div>
           </div>
@@ -393,7 +393,48 @@ const marketPrices = await getMarketPrices();
   // Astroのライフサイクルに合わせて初期化
   document.addEventListener('astro:page-load', initChart);
   // 初期読み込み時にも実行
+  // 初回読み込み時にも実行
   initChart();
+
+  // --- フォロワー数のカウントアップ・ギミック ---
+  function initCountUp() {
+    const target = document.getElementById('followerCount');
+    if (!target) return;
+
+    const finalValue = 20000;
+    const duration = 2000; // 2秒かけてカウントアップ
+    const frameRate = 1000 / 60; // 60fps
+    const totalFrames = Math.round(duration / frameRate);
+    let currentFrame = 0;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // 画面に入ったらアニメーション開始
+        const timer = setInterval(() => {
+          currentFrame++;
+          const progress = currentFrame / totalFrames;
+          // イージング（後半ゆっくりにする）
+          const easeOutQuad = 1 - (1 - progress) * (1 - progress);
+          const currentValue = Math.floor(easeOutQuad * finalValue);
+          
+          // カンマ区切りで表示
+          target.textContent = currentValue.toLocaleString();
+
+          if (currentFrame === totalFrames) {
+            clearInterval(timer);
+          }
+        }, frameRate);
+        
+        // 一度実行したら監視を止める
+        observer.unobserve(target);
+      }
+    }, { threshold: 0.5 }); // 50%見えたら開始
+
+    observer.observe(target);
+  }
+
+  document.addEventListener('astro:page-load', initCountUp);
+  initCountUp();
 </script>
 
 <style>
