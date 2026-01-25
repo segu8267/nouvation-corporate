@@ -41,11 +41,12 @@
 
     let i = 0;
     function type() {
+      if (!target) return; // 安全性のためのチェック
+
       if (i < chars.length) {
         if (chars[i] === "\n") {
-          target.innerHTML += "<br />";
+          target.insertAdjacentHTML('beforeend', '<br />');
         } else {
-          // 1文字ずつ追加し、ふわっと出すためにspanで囲む
           const span = document.createElement('span');
           span.textContent = chars[i];
           span.style.opacity = '0';
